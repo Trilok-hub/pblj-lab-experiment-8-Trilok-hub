@@ -1,21 +1,71 @@
-Steps to Implement
-1. Set Up Your Environment
-- Install Java Development Kit (JDK)
-- Install Apache Tomcat (Servlet Container)
-- Set up an IDE (Eclipse, IntelliJ, or VScode)
+1. Setting Up Environment
+  
+Installing JDK: Downloaded and installed the Java Development Kit.
 
-2. Create an HTML Login Form (login.html)
-This form collects the username and password from the user.
+Installing Apache Tomcat: Downloaded from tomcat.apache.org and extract it.
 
-3. Create the Java Servlet to Process Login (LoginServlet.java)
-This servlet reads username and password from the request.
-It checks the credentials.
-- If valid, it displays a welcome message.
-- If invalid, it redirects back to the login page.
+Choosing an IDE: Used VS Code, Eclipse, or IntelliJ for development.
 
-4.  Configure web.xml
-5. Deploy and Run
-- Place the login.html file inside the WebContent (for VScode) or webapp (for Maven projects).
-- Compile and deploy the servlet in Tomcat.
-Access the form in your browser:
-http://localhost:8080/login.html
+
+  Creating login.html
+  code :
+<!DOCTYPE html>
+<html>
+<head><title>Login</title></head>
+<body>
+  <form method="post" action="login">
+    Username: <input type="text" name="Trilok_Rauniyar" required /><br/>
+    Password: <input type="password" name="Tri@123#" required /><br/>
+    <input type="submit" value="Login" />
+  </form>
+</body>
+</html>
+
+
+  Creating LoginServlet.java 
+  code :
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LoginServlet extends HttpServlet {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
+    String user = request.getParameter("Trilok_Rauniyar");
+    String pass = request.getParameter("Tri@123#");
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    if ("admin".equals(user) && "1234".equals(pass)) {
+      out.println("<h2>Welcome, " + user + "!</h2>");
+    } else {
+      response.sendRedirect("login.html");
+    }
+  }
+}
+
+
+
+Configuring web.xml
+  code:
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+5. Deploying and Runing
+  
+Place login.html inside:
+WebContent 
+src/main/webapp 
+Compiled and builded the project.
+Copied the .war file 
+Started Tomcat server.
